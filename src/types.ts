@@ -35,3 +35,8 @@ export interface ImageModalProps {
   onRequestClose: () => void;
   image: Image;
 }
+
+export interface UnsplashSearchPhoto {
+  results: [];
+  total_pages: number;
+}

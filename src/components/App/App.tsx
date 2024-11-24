@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
 ReactModal.setAppElement('#root');
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import Loader from '../Loader/Loader.jsx';
@@ -10,7 +10,7 @@ import ImageGallery from '../ImageGallery/ImageGallery.jsx';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn.jsx';
 import ImageModal from '../ImageModal/ImageModal.jsx';
 
-import { Image, ImagesProps } from '../../types.js';
+import { Image, ImagesProps, UnsplashSearchPhoto } from '../../types.js';
 
 function App() {
   const [searchValue, setSearchValue] = useState<string | null>(null);
@@ -38,9 +38,10 @@ function App() {
     const fetchImages = async () => {
       try {
         setIsLoading(true);
-        const imagesBySearch = await axios.get(
-          `https://api.unsplash.com/search/photos?client_id=teidMVVe7-sWKxTRBIvTmeV8BBwYOnKyaG_QYy0T0iw&per_page=24&query=${searchValue}&page=${page}`
-        );
+        const imagesBySearch: AxiosResponse<UnsplashSearchPhoto> =
+          await axios.get(
+            `https://api.unsplash.com/search/photos?client_id=teidMVVe7-sWKxTRBIvTmeV8BBwYOnKyaG_QYy0T0iw&per_page=24&query=${searchValue}&page=${page}`
+          );
 
         if (page > 1) {
           setImages(data => [
